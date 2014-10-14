@@ -62,10 +62,14 @@
       newElement = newElement.replace(/__name__/g, this.options.index);
 
       if (this.usesLi) {
-        newElement = $('<li></li>').html(newElement);
+        newElement = $('<li class="js-symfony-collection-li"></li>').html(newElement);
       }
 
+      newElement.trigger('symfony-collection-element-added', [newElement]);
+
       this.$element.append(newElement);
+
+
 
       this.options.index++;
       this.count++;
