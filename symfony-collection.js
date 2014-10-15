@@ -1,3 +1,4 @@
+console.log('hello world, this is your modifed symfony2 collection');
 /* =========================================================
  * symfony-collection.js
  * https://github.com/carlalexander/symfony-collection.js
@@ -68,8 +69,6 @@
       newElement.trigger('symfony-collection-element-added', [newElement]);
 
       this.$element.append(newElement);
-
-
 
       this.options.index++;
       this.count++;
