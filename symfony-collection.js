@@ -1,4 +1,3 @@
-console.log('hello world, this is your modifed symfony2 collection');
 /* =========================================================
  * symfony-collection.js
  * https://github.com/carlalexander/symfony-collection.js
@@ -27,32 +26,34 @@ console.log('hello world, this is your modifed symfony2 collection');
   var Collection = function(element, options) {
     this.options = options;
     this.elementId = '#' + element.id;
-    this.$element = $(element)
-      .delegate('[data-remove="collection"]', 'click.remove.collection', $.proxy(this.remove, this));
+    this.$element = $(element).delegate(
+      '[data-remove="collection"]',
+      'click.remove.collection',
+      $.proxy(this.remove, this)
+    );
 
     this.usesLi = this.$element.is('ul');
 
     if (this.usesLi) {
-      this.count = $(this.elementId + ' > li').length
+      this.count = $(this.elementId + ' > li').length;
     } else {
-      this.count = $(this.elementId + ' > div').length
+      this.count = $(this.elementId + ' > div').length;
     }
 
     if (this.options.limit && !this.isInt(this.options.limit)) {
-      this.options.limit = $.fn.collection.defaults.limit
+      this.options.limit = $.fn.collection.defaults.limit;
     }
 
     if (!this.isInt(this.options.index)) {
-      this.options.index = $.fn.collection.defaults.index
+      this.options.index = $.fn.collection.defaults.index;
     }
 
     if (this.options.index < this.count) {
-      this.options.index = this.count
+      this.options.index = this.count;
     }
   };
 
   Collection.prototype = {
-
     constructor: Collection, add: function() {
       var newElement = this.options.prototype;
 
@@ -66,9 +67,8 @@ console.log('hello world, this is your modifed symfony2 collection');
         newElement = $('<li class="js-symfony-collection-li"></li>').html(newElement);
       }
 
-      newElement.trigger('symfony-collection-element-added', [newElement]);
-
       this.$element.append(newElement);
+      $(newElement).trigger('update');
 
       this.options.index++;
       this.count++;
@@ -85,9 +85,9 @@ console.log('hello world, this is your modifed symfony2 collection');
         }
       }
 
-      this.count--
+      this.count--;
     }, isInt: function(value) {
-      return typeof value === 'number' && value % 1 == 0
+      return typeof value === 'number' && value % 1 == 0;
     }
   };
 
@@ -96,7 +96,11 @@ console.log('hello world, this is your modifed symfony2 collection');
 
   $.fn.collection = function(option) {
     return this.each(function() {
-      var $this = $(this), data = $this.data('collection'), options = $.extend({}, $.fn.collection.defaults, $this.data(), typeof option == 'object' && option);
+      var
+        $this = $(this),
+        data = $this.data('collection'),
+        options = $.extend({}, $.fn.collection.defaults, $this.data(), typeof option == 'object' && option);
+
       if (!data) {
         $this.data('collection', (data = new Collection(this, options)))
       }
@@ -126,7 +130,7 @@ console.log('hello world, this is your modifed symfony2 collection');
 
       e.preventDefault();
 
-      $target.collection('add')
+      $target.collection('add');
     });
     $('[data-prototype]').each(function() {
       $(this).collection()
