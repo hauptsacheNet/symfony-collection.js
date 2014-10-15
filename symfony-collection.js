@@ -17,7 +17,6 @@
  * limitations under the License.
  * ========================================================= */
 !function($) {
-
   "use strict";
 
   /* COLLECTION CLASS DEFINITION
@@ -54,7 +53,8 @@
   };
 
   Collection.prototype = {
-    constructor: Collection, add: function() {
+    constructor: Collection,
+    add: function() {
       var newElement = this.options.prototype;
 
       if (this.options.limit && this.count >= this.options.limit) {
@@ -67,12 +67,14 @@
         newElement = $('<li class="js-symfony-collection-li"></li>').html(newElement);
       }
 
+      console.log('foo');
       this.$element.append(newElement);
-      $(newElement).trigger('update');
+      this.$element.trigger('update');
 
       this.options.index++;
       this.count++;
-    }, remove: function(e) {
+    },
+    remove: function(e) {
       var $target = $(e.target);
 
       e && e.preventDefault();
@@ -86,7 +88,8 @@
       }
 
       this.count--;
-    }, isInt: function(value) {
+    },
+    isInt: function(value) {
       return typeof value === 'number' && value % 1 == 0;
     }
   };
@@ -132,6 +135,7 @@
 
       $target.collection('add');
     });
+
     $('[data-prototype]').each(function() {
       $(this).collection()
     });
