@@ -48,6 +48,13 @@
     if (this.options.index < this.count) {
       this.options.index = this.count
     }
+
+    console.log(this.options.prototypeName);
+    if (typeof this.options.prototypeName === 'string') {
+        this.options.prototypeName = new RegExp(this.options.prototypeName, 'g');
+    } else {
+        this.options.prototypeName = new RegExp('__name__', 'g');
+    }
   };
 
   Collection.prototype = {
@@ -59,7 +66,7 @@
 
         if (this.options.limit && this.count >= this.options.limit) return
 
-        newElement = newElement.replace(/__name__/g, this.options.index);
+        newElement = newElement.replace(this.options.prototypeName, this.options.index);
 
         if (this.usesLi) {
           newElement = $('<li></li>').html(newElement);
@@ -107,7 +114,8 @@
 
   $.fn.collection.defaults = {
       limit: null,
-      index: 0
+      index: 0,
+      prototypeName: '__name__'
   }
 
   $.fn.collection.Constructor = Collection
